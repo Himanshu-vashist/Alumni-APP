@@ -1,0 +1,96 @@
+<% layout("/layouts/boilerplate.ejs") %>
+
+<style>
+  .custom-bg {
+    background-color: blue;
+   
+    min-height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .custom-card {
+    background-color: rgb(235, 230, 230); /* Burlywood with transparency */
+    
+    width: 90%;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+  }
+
+  #signup-title {
+    font-size: 24px;
+    color: #333;
+    text-align: center;
+  }
+
+  #signup-form {
+    margin-top: 20px;
+  }
+
+  .signup-input {
+    margin-bottom: 20px;
+  }
+
+  #signup-button {
+    margin-top: 20px;
+  }
+  .btn-block{
+    border-radius: 10px;
+  }
+  .SignInImage{
+    height:250px ;
+    margin-top: 70px;
+    border-radius: 10px;
+    
+  }
+  .SignUpBox{
+    margin-right: 40px;
+  }
+</style>
+
+<div class="custom-bg">
+  <div class="custom-card">
+    <div class="row">
+      <div class="col-md-6 offset-md-3" id="signup-form">
+       
+        <div class="row">
+          <div class="col-6 SignUpBox">
+            <h1 id="signup-title" ><b>Sign Up</b></h1>
+            <form action="/signup" method="POST" class="needs-validation" novalidate autocomplete="username">
+              <div class="mb-3 mt-3 signup-input">
+                <label for="username" class="form-label">Username</label>
+                <input name="username" type="text" class="form-control" required/>
+              
+              </div>
+              <div class="mb-3 signup-input">
+                <label for="email" class="form-label">Email</label>
+                <input name="email" type="email" class="form-control" required/>
+              </div>
+              <div class="mb-3 signup-input">
+                <label for="password" class="form-label">Password</label>
+                <input name="password" type="password" id="password" class="form-control" autocomplete="current-password" required/>
+              </div>
+              <button type="submit" class="btn btn-success btn-block" id="signup-button" style="background-color: rgb(0, 0, 0); color: white; padding: 15px 30px; font-size: 18px;">
+                Sign Up
+              </button>
+              
+              
+              
+            </form>
+          </div>
+
+
+
+
+
+          <div class="col-5">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2m2WA7hmcc-I_RqVOA7CcjYL3YLklxl0PxA&s "  class="SignInImage" alt="Alumni img">
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

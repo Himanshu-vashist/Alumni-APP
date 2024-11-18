@@ -1,0 +1,241 @@
+<%- layout("/layouts/boilerplate.ejs") %>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat System</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to external CSS -->
+    <style>
+      /* Global Styles */
+      body {
+          font-family: 'Arial', sans-serif;
+          background-color: #f0f2f5;
+          margin: 0;
+          padding: 20px;
+      }
+
+      /* Heading */
+      h1 {
+          text-align: center;
+          color: #4A4A4A;
+          margin-bottom: 20px;
+          font-size: 2.5rem;
+          font-weight: 700;
+      }
+
+
+
+  /* Heading */
+  h1 {
+      text-align: center;
+      color: #4A4A4A;
+      margin-bottom: 20px;
+      font-size: 2.5rem;
+      font-weight: 700;
+  }
+
+  /* Dropdown Section */
+  .dropdown-section {
+      margin: 20px auto;                /* Center the section */
+      max-width: 400px;                 /* Limit the width */
+      text-align: center;               /* Center text */
+      font-family: 'Arial', sans-serif;
+  }
+
+  /* Label */
+  .dropdown-section label {
+      font-size: 1.2rem;
+      color: #333;
+      font-weight: 600;
+      margin-bottom: 10px;
+      display: block;                   /* Display label on its own line */
+  }
+
+  /* Select Box Styling */
+  .dropdown-section select {
+      width: 100%;
+      padding: 10px 15px;
+      font-size: 1rem;
+      color: #555;
+      border: 2px solid #007BFF;
+      border-radius: 10px;
+      background-color: white;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      outline: none;
+  }
+
+  .dropdown-section select:focus {
+      border-color: #0056b3;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  }
+
+  .dropdown-section option {
+      padding: 10px;
+  }
+
+  /* Adding a subtle animation on hover */
+  .dropdown-section select:hover {
+      border-color: #0056b3;
+  }
+      /* Chat Container */
+      .chat-container {
+          display: flex;  
+          flex-wrap: wrap;            /* Allow wrapping of items */
+          gap: 20px;                  /* Space between chat cards */
+          justify-content: center;    /* Center cards within the container */
+      }
+
+      /* Chat Card Styles */
+      .card {
+          background-color: white;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+          border-radius: 12px;
+          overflow: hidden;
+          width: 300px;               /* Set a fixed width for the chat card */
+          transition: transform 0.3s ease;
+          margin-bottom: 20px;        /* Add space at the bottom for wrap effect */
+      }
+
+      .card:hover {
+          transform: scale(1.02);     /* Slight hover effect */
+      }
+
+      /* Image Section */
+      .card img {
+          width: 100%;
+          height: 200px;
+          object-fit: cover;
+      }
+
+      /* Card Body */
+      .card-body {
+          padding: 10px;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+      }
+
+      /* Card Title */
+      .card-title {
+          font-size: 1.2rem;
+          margin-bottom: 10px;
+          color: #007BFF;
+      }
+
+      .card-title b {
+          color: #333;
+      }
+
+      /* Message Text */
+      .card-text h3 {
+          font-size: 1.1rem;
+          margin: 10px 0;
+          color: #555;
+      }
+
+      /* Received By Text */
+      .card-text small {
+          color: #999;
+      }
+
+      /* Buttons */
+      button {
+          padding: 3px;
+          border: none;
+          border-radius: 5px;
+          background-color: #007BFF;
+          color: white;
+          font-size: 0.9rem;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+          margin-right: 5px;
+      }
+
+      button:hover {
+          background-color: #0056b3;
+      }
+
+      /* Form Styles */
+      form {
+          display: inline-block;
+      }
+
+      /* Responsive */
+      @media (max-width: 1200px) {
+          .card {
+              width: 280px;          /* Adjust card width for medium screens */
+          }
+      }
+
+      @media (max-width: 768px) {
+          .card {
+              width: 100%;            /* Full-width cards on small screens */
+          }
+
+          .chat-container {
+              justify-content: flex-start; /* Align cards to the left on small screens */
+          }
+      }
+    </style>
+</head>
+<body>
+    <h1>All Posts!</h1> 
+
+<div class="dropdown-section">
+    <label for="type">Type of Post:</label>
+    <select id="type" name="type" required>
+        <option value="">Select a type</option>
+        <option value="">Alumni</option>
+        <option value="news">News & Events</option>
+        <option value="blog">Job Opening</option>
+        <option value="announcement">Announcement</option>
+        <option value="event">Success Story</option>
+    </select>
+</div>
+    
+    <div class="chat-container"> <!-- Chat container for flex layout -->
+        <% for(let chat of chats){ %>
+        <div class="card">
+            <!-- Optional: If you want to include images in your posts, make sure the images are accessible -->
+            <!-- <img src="path/to/image.jpg" alt="Chat Image"> -->
+                
+            <div class="card-body">
+                <!--
+                  <h5 class="card-title"><b>From: </b><i><%= chat.from %></i></h5>
+                <p class="card-text">
+                    <h3><%= chat.message %></h3>
+                    <form method="get" action="/chats/<%= chat._id %>/edit">
+                      <button>Edit</button> 
+                    </form>
+                </p>
+                <form method="POST" action="/chats/<%= chat._id %>?_method=DELETE">
+                    <button>Delete</button> 
+                </form>
+                <h5><b>Received By:</b> <i><%= chat.to %></i></h5>
+                <p class="card-text"><small>Last updated 3 mins ago</small></p>
+                
+                -->
+                <div class="card text-center">
+                    <div class="card-header">
+                        News & Events 
+                    </div>
+                    <div class="card-body">
+                      <h5 class="card-title"><b>From: </b><i><%= chat.from %></i></h5>
+                      <p class="card-text"><h3><%= chat.message %></h3></p>
+                      <a href="#" class="btn btn-primary"> <h5><b>To :</b> <i><%= chat.to %></i></h5></a>
+                    </div>
+                    <div class="card-footer text-body-secondary">
+                      2 days ago
+                    </div>
+                  </div>
+            </div>
+        </div>
+        <% } %>
+    </div>
+</body>
+</html>
+
+

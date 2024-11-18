@@ -1,0 +1,159 @@
+<% layout("/layouts/boilerplate.ejs") %>
+
+<style>
+  /* Your existing CSS styles */
+  #filters {
+    margin-left: 2px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 7rem;
+    padding: 1rem;
+    background-color: #f8f8f8;
+  }
+
+  .filter {
+    text-align: center;
+    margin-top: 1rem;
+   
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+  }
+
+  .filter:hover {
+    background-color: #f0f0f0;
+    cursor: pointer;
+  }
+
+  .filter p {
+    font-size: 1.0rem;
+    margin: 0;
+  }
+
+  .filter i {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .tax-info {
+    display: none;
+  }
+
+  .tax-toggle {
+    border: 1px solid black;
+    border-radius: 1rem;
+    height: 3.25rem;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+  }
+  .listing_profile{
+    margin-left: 20px;
+  }
+.card-img-top{
+  width: 150px;         /* Set the width of the image */
+  height: 150px;        /* Set the height of the image (make it a square) */
+ /* object-fit: cover; */   /* Ensure the image covers the container and stays proportional */
+  border-radius: 50%;   /* Make the image circular */
+  margin: 0 auto;       
+}
+
+</style>
+
+<div id="filters">
+  <div class="filter" data-filter="bsc">
+    <div><i class="fa-solid fa-fire"></i></div>
+    <p>B.sc</p>
+  </div>
+  <div class="filter" data-filter="btech">
+    <div><i class="fa-solid fa-campground"></i></div>
+    <p>B.tech</p>
+  </div>
+  <div class="filter" data-filter="mtech">
+    <div><i class="fa-solid fa-fire"></i></div>
+    <p>M.tech</p>
+  </div>
+  <div class="filter" data-filter="phed">
+    <div><i class="fa-solid fa-campground"></i></div>
+    <p>Phed</p>
+  </div>
+</div>
+
+
+
+ 
+  
+  
+  
+  <!-- Add other filters as needed -->
+   
+  <div class="tax-toggle">
+    <div class="form-check-reverse form-switch">
+      <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+      <label class="form-check-label" for="flexSwitchCheckDefault">Graduation Year</label>
+    </div>
+  </div>
+  
+</div>
+
+<%= success %>
+
+<div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-3 listing_profile ">
+  <% for(let listing of listings) { %>
+    <a href="/listings/<%= listing._id %>" class=" ">
+      <div class="card col listing card">
+        <img src="<%= listing.image.url %>" 
+             class="card-img-top" 
+             alt="<%= listing.name %>'s Image" 
+             style="height: 20rem">
+        
+        <div class="card-image-overlay"></div> 
+
+        <div class="card-body">
+          <p class="card-text">
+            <b><%= listing.name %></b> <br/>
+            <%= listing.degree %> <br/>
+            <% if (listing && listing.price) { %>
+              &#8377;<%= listing.price.toLocaleString("en-IN") %> / night
+              <i class="tax-info">&nbsp; &nbsp;+18% GST</i>
+            <% } %>
+          </p>
+        </div>
+      </div>
+    </a>
+  <% } %>
+</div>
+
+<script>
+  let taxSwitch = document.getElementById("flexSwitchCheckDefault");
+  taxSwitch.addEventListener("click", () => {
+    let taxInfo = document.getElementsByClassName("tax-info");
+    for(let info of taxInfo) {
+      info.style.display = info.style.display === "inline" ? "none" : "inline";
+    }
+    console.log("clicked");
+  });
+
+  const filters = document.querySelectorAll('.filter');
+  const items = document.querySelectorAll('.item');
+
+  // Loop through all filters
+  filters.forEach(filter => {
+    filter.addEventListener('click', () => {
+      const filterValue = filter.getAttribute('data-filter');
+
+      // Loop through items to show or hide them based on the selected filter
+      items.forEach(item => {
+        if (item.getAttribute('data-category') === filterValue || filterValue === 'all') {
+          item.style.display = 'block'; // Show the item
+        } else {
+          item.style.display = 'none'; // Hide the item
+        }
+      });
+    });
+  });
+</script>
